@@ -20,7 +20,7 @@ docker ps
 ```
 
 ## Test the Flask App
-Once time that the app is running, you can perform a little test:
+Once the app is running, you can perform a little test:
 
  ```bash
 #GET
