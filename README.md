@@ -51,7 +51,7 @@ There are many ways to use and interact with all AWS services. Some of them are:
 This role will be used by our EC2 instance. You can find more details below:
 1. Type of trusted entity: AWS Services
 2. Use case: EC2
-3. Permission policies: AmazonEC2ContainerRegistryFullAccess
+3. Permission policies: AmazonEC2ContainerRegistryFullAccess \
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/security_iam_id-based-policy-examples.html
 
 ### Step 2: Launch an EC2 Instance
@@ -71,4 +71,4 @@ chmod 0700 /home/$NEWUSER/.ssh
 chmod 0600 /home/$NEWUSER/.ssh/authorized_keys
 snap install aws-cli --classic
 ```
-(https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
