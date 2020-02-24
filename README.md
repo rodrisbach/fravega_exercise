@@ -82,7 +82,7 @@ Install the following packages if them are not already installed in your system:
 snap install aws-cli --classic
 snap install jq
 ```
-You have to add your access keys and preferences to use aws-cli. You can use the following command:
+Add your access keys and preferences to use aws-cli. You can use the following command:
 ```bash
 aws configure
 ```
