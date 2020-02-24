@@ -2,9 +2,8 @@
 - name: Install docker and run a container
   hosts: all
   become: yes
-  become_user: admin
   gather_facts: true
-    
+
   roles:
     - install-docker
-    - run-container
+    #- run-container

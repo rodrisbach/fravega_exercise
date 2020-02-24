@@ -15,6 +15,5 @@
     update_cache: yes
 - name: Install Docker
   apt:
-    name: "{{ docker_packages}}"
+    name: "{{ docker_packages }}"
     state: latest
-  
