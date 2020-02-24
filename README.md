@@ -58,7 +58,7 @@ https://docs.aws.amazon.com/AmazonECR/latest/userguide/security_iam_id-based-pol
 ### Step 2: Launch an EC2 Instance
 The easiest way to launch an instance is using Amazon Management Console, but it is your choice. When you are creating the instance, you have to perform two relevant actions:
 1. Attach the IAM Role created in the Step 1 to the new instance
-2. Add the following User Data to create an user whit your public SSH key and install aws cli.
+2. Add the following script in the User Data field. This script is used to complete two tasks, the first is add a new user who will contain your SSH public key, and you will use to run the Ansible playbooks (yes, the EC2 Instance will be provisioned using Ansible). The second task is install AWS CLI, used to login into the private registry and create a new repository
 ```bash
 #!/bin/bash
 NEWUSER="<YOUR_USER>"
@@ -73,3 +73,23 @@ chmod 0600 /home/$NEWUSER/.ssh/authorized_keys
 snap install aws-cli --classic
 ```
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
+
+### Step 3: Create an ECR repository and push the container image
+You can run the following commands locally. You need install aws-cli and then you have to configure the authentication files (~/.aws/) using the following command:
+```bash
+aws configure
+```
+You will need your AWS access keys (if you are using the AWS account root user or you are using a simple user with the right roles and permissions) to create a new ECR Repository. After run the last command, your credentials and configurations should be in ~/.aws/credentials and ~/.aws/config.
+Now, you can run the next commands:
+```bash
+NAME = $1
+aws ecr create-repository --repository-name $NAME  --region us-east-1
+REPOSITORY_URI = $(aws ecr describe-repositories --repository-name $NAME --region us-east-1| jq .repositories[].repositoryUri)
+aws ecr get-login --no-include-email --region us-east-1
+#Retrieve the login command to use to authenticate your Docker client to your registry.
+docker login -u AWS -p <HASH>
+#you have to be inside the repository to execute the following command:
+docker build -t $NAME .
+docker tag $NAME:latest $REPOSITORY_URI/$NAME:latest
+docker push $REPOSITORY_URI/$NAME:latest
+```
