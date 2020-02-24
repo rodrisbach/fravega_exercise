@@ -52,6 +52,7 @@ This role will be used by our EC2 instance. You can find more details below:
 1. Type of trusted entity: AWS Services
 2. Use case: EC2
 3. Permission policies: AmazonEC2ContainerRegistryFullAccess \
+
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/security_iam_id-based-policy-examples.html
 
 ### Step 2: Launch an EC2 Instance
