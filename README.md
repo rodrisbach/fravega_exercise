@@ -75,7 +75,7 @@ snap install aws-cli --classic
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
 
 ### Step 3: Create an ECR repository and push the container image
-You can run the following commands locally. You have to install the following packages:
+Install the following packages if them are not already installed in your system:
 * aws-cli
 * jq
 ```bash
