@@ -75,13 +75,21 @@ snap install aws-cli --classic
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
 
 ### Step 3: Create an ECR repository and push the container image
-You can run the following commands locally. You need install aws-cli and then you have to configure the authentication files (~/.aws/) using the following command:
+You can run the following commands locally. You have to install the following packages:
+* aws-cli
+* jq
+```bash
+snap install aws-cli --classic
+snap install jq
+```
+You have to add your access keys and preferences to use aws-cli. You can use the following command:
 ```bash
 aws configure
 ```
-You will need your AWS access keys (if you are using the AWS account root user or you are using a simple user with the right roles and permissions) to create a new ECR Repository. After run the last command, your credentials and configurations should be in ~/.aws/credentials and ~/.aws/config.
-Now, you can run the next commands:
+After run the last command, your credentials and configurations should be in ~/.aws/credentials and ~/.aws/config.
+Save the script below, make it executable and run it. This script receive one argument, the repository's name, If you forget this argument, the script will fails.
 ```bash
+#/bin/bash
 NAME = $1
 aws ecr create-repository --repository-name $NAME  --region us-east-1
 REPOSITORY_URI = $(aws ecr describe-repositories --repository-name $NAME --region us-east-1| jq .repositories[].repositoryUri)
