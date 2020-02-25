@@ -1,2 +1,3 @@
 remote_image: 448486726473.dkr.ecr.us-east-1.amazonaws.com/fravega_exercise:latest
 registry: 448486726473.dkr.ecr.us-east-1.amazonaws.com
+region: us-east-1
