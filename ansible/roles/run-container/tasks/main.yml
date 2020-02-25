@@ -1,0 +1,12 @@
+---
+  #aws ecr get-login-password | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.us-east-1.amazonaws.com
+- name: ECR and Docker login
+  shell: aws ecr get-login-password | docker login --username AWS --password-stdin "{{ registry }}"
+- name: Run a container
+  docker_container:
+    name: FlaskApp
+    image: "{{ remote_image }}"
+    ports:
+      - "8080:8080"
+    #if I use the EXPOSE sentence in the dockerfile this line is not needed
+    state: present
