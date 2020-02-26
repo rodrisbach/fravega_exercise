@@ -101,3 +101,15 @@ docker build -t $NAME .
 docker tag $NAME:latest $REPOSITORY_URI/$NAME:latest
 docker push $REPOSITORY_URI/$NAME:latest
 ```
+
+### Step 4: Complete and replace the variables
+You have to replace the variables in the following files:
+* inventory/my_inventory : Complete the list with the IP of your instances (virtual servers)
+* roles/run-container/vars/main.yml : Complete with the your private registry's name, region and image's name.
+* ansible.cfg file: Here you have to specify the remote user, the ssh key, and you can change the inventory location if you want to use your own custom inventory.
+
+### Step 5: Run the playbook
+You have to be on the ansible directory to run the following command.
+```bash
+ansible-playbook main.yml
+```
