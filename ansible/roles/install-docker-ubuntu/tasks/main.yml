@@ -17,3 +17,7 @@
   apt:
     name: "{{ docker_packages }}"
     state: latest
+- name: Install Docker SDK
+  pip:
+    name: docker
+    state: latest

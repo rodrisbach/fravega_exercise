@@ -5,6 +5,8 @@ needed_packages:
     - curl
     - gnupg-agent
     - software-properties-common
+    - python3-pip
+    - awscli
 
 docker_packages:
     - docker-ce

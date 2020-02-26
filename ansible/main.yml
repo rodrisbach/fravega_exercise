@@ -5,6 +5,5 @@
   gather_facts: true
 
   roles:
-    - install-docker-amazon-linux
-    #it can be variable
+    - install-docker
     - run-container

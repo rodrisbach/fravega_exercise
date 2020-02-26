@@ -9,4 +9,4 @@
     ports:
       - "8080:8080"
     #if I use the EXPOSE sentence in the dockerfile this line is not needed
-    state: present
+    state: started
