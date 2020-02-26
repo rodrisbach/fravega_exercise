@@ -4,10 +4,10 @@
 ### Steps to run Flask App using virtualenv:
 
 ```bash
-export FLASK_ENV='development'
-virtualenv -p python3 myenv
-source myenv/bin/activate
-pip install -r requirements.txt
+export FLASK_ENV='development' \
+virtualenv -p python3 myenv \
+source myenv/bin/activate \
+pip install -r requirements.txt \
 python3 main.py
 ```
 
@@ -58,20 +58,8 @@ https://docs.aws.amazon.com/AmazonECR/latest/userguide/security_iam_id-based-pol
 ### Step 2: Launch an EC2 Instance
 The easiest way to launch an instance is using Amazon Management Console, but it is your choice. When you are creating the instance, you have to perform two relevant actions:
 1. Attach the IAM Role created in the Step 1 to the new instance
-2. Add the following script in the User Data field. This script is used to complete two tasks, the first is add a new user who will contain your SSH public key, and you will use to run the Ansible playbooks (yes, the EC2 Instance will be provisioned using Ansible). The second task is install AWS CLI, used to login into the private registry and create a new repository
-```bash
-#!/bin/bash
-NEWUSER="<YOUR_USER>"
-NEWUSERKEY="<YOUR_SSH_PUBLIC_KEY>"
-adduser $NEWUSER
-echo "$NEWUSER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-mkdir -p /home/$NEWUSER/.ssh
-echo $NEWUSERKEY >> /home/$NEWUSER/.ssh/authorized_keys
-chown -R $NEWUSER:$NEWUSER /home/$NEWUSER/.ssh
-chmod 0700 /home/$NEWUSER/.ssh
-chmod 0600 /home/$NEWUSER/.ssh/authorized_keys
-snap install aws-cli --classic
-```
+2. Add [the following script](user_data.sh) in the User Data field.  This script is used to complete two tasks, the first is add a new user who will contain your SSH public key, and you will use to run the Ansible playbooks (yes, the EC2 Instance will be provisioned using Ansible). The second task is install AWS CLI, used to login into the private registry and create a new repository
+
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html
 
 ### Step 3: Create an ECR repository and push the container image
@@ -87,20 +75,9 @@ Add your access keys and preferences to use aws-cli. You can use the following c
 aws configure
 ```
 After run the last command, your credentials and configurations should be in ~/.aws/credentials and ~/.aws/config.
-Save the script below, make it executable and run it. This script receive one argument, the repository's name, If you forget this argument, the script will fails.
-```bash
-#/bin/bash
-NAME = $1
-aws ecr create-repository --repository-name $NAME  --region us-east-1
-REPOSITORY_URI = $(aws ecr describe-repositories --repository-name $NAME --region us-east-1| jq .repositories[].repositoryUri)
-aws ecr get-login --no-include-email --region us-east-1
-#Retrieve the login command to use to authenticate your Docker client to your registry.
-docker login -u AWS -p <HASH>
-#you have to be inside the GitLab repository to execute the following command:
-docker build -t $NAME .
-docker tag $NAME:latest $REPOSITORY_URI/$NAME:latest
-docker push $REPOSITORY_URI/$NAME:latest
-```
+Use [the following script](create_ecr_registry_and_push_image.sh). This script receive one argument, the repository's name, If you forget this argument, the script will fails.
+
+
 
 ### Step 4: Complete and replace the variables
 You have to replace the variables in the following files:
