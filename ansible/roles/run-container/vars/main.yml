@@ -1,0 +1,3 @@
+remote_image: <YOUR_IMAGE>
+registry: <YOUR_REGISTRY>
+region: <SPECIFY_THE_REGION>

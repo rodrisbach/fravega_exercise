@@ -1,0 +1,21 @@
+---
+- name: Install docker and needed packages
+  yum:
+    name: "{{ yum_packages }}"
+    state: latest
+
+- name: Install pip packages
+  pip:
+    name: "{{ pip_packages }}"
+    state: present
+- name: Enable Docker CE service at startup
+  service:
+    name: docker
+    state: started
+    enabled: yes
+- name: amazon-linux-extras enable Docker
+  shell: amazon-linux-extras enable docker
+- name: install amazon-ecr-credential-helper
+  yum:
+    name: amazon-ecr-credential-helper
+    state: latest

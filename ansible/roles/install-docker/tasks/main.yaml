@@ -1,0 +1,7 @@
+---
+- include_role:
+    name: install-docker-amazon-linux
+  when: ansible_distribution == 'Amazon'
+- include_role:
+    name: install-docker-ubuntu
+  when: ansible_distribution == 'Ubuntu'

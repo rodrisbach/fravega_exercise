@@ -1,0 +1,9 @@
+---
+- name: Install docker and run a container
+  hosts: all
+  become: yes
+  gather_facts: true
+
+  roles:
+    - install-docker
+    - run-container
