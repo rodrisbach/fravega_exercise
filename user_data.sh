@@ -1,4 +1,4 @@
-#/bin/#!/usr/bin/env bash
+#/bin/bash
 NEWUSER="<YOUR_USER>"
 NEWUSERKEY="<YOUR_SSH_PUBLIC_KEY>"
 adduser $NEWUSER
