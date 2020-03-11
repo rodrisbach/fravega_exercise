@@ -1,5 +1,5 @@
 #/bin/bash
-NAME = $1
+NAME=$1
 aws ecr create-repository --repository-name $NAME  --region us-east-1
 REPOSITORY_URI = $(aws ecr describe-repositories --repository-name $NAME --region us-east-1| jq .repositories[].repositoryUri)
 aws ecr get-login --no-include-email --region us-east-1
